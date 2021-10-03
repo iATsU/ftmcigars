@@ -18,19 +18,16 @@ for row in data.itertuples(index=True, name='Pandas'):
         'name': f'FTM Cigar #{row.Index}',
         'external_url': 'https://ftmcigars.xyz/',
         'ID': row.Index,
-        'image': f'https://ftmcyberpunks.com/cigar/art/{row.Index}.png'
+        'image': f'https://ftmcyberpunks.com/cigar/art/{row.Index}.png',
+        'attributes': [
+            {'trait_type':'Background', 'value':row.Background},
+            {'trait_type':'Wrapper', 'value':row.Wrapper},
+            {'trait_type':'Band', 'value':row.Band},
+            {'trait_type':'Ash', 'value':row.Ash},
+            {'trait_type':'Ashtray', 'value':row.Ashtray}
+        ]
     }
     
-    attri = [
-        {'trait_type':'Background', 'value':row.Background},
-        {'trait_type':'Wrapper', 'value':row.Wrapper},
-        {'trait_type':'Band', 'value':row.Band},
-        {'trait_type':'Ash', 'value':row.Ash},
-        {'trait_type':'Ashtray', 'value':row.Ashtray}
-    ]
-
-    meta = attri
-
     cigars.append(meta)
 
 @app.route('/api/cigarsMeta', methods=['GET'])
@@ -48,7 +45,7 @@ def api_index():
 
     # Loop through the data and match results that fit the requested ID.
     # IDs are unique, but other fields might return many results
-    if 0<=index<3000:
+    if 0<=index<200:
         for cigar in cigars:
             if cigar['ID'] == index:
                 result = cigar
